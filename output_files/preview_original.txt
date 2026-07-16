@@ -1,0 +1,8 @@
+
+
+===== healthcare_test.csv =====
+
+       name      nric             email    phone patient_id medical_record    diagnosis  age password
+  Sarah Lim S1234567A   sarah@email.com 81234567     P10001         MRN001     Diabetes   34 admin123
+Michael Tan T2345678B michael@email.com 92345678     P10002         MRN002 Hypertension   45 admin123
+ Rachel Lee S3456789C  rachel@email.com 93456789     P10003         MRN003       Asthma   28 admin123

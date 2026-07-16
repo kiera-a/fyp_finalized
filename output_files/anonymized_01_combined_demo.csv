@@ -1,0 +1,4 @@
+sector,name,nric,email,phone,patient_id,medical_record,diagnosis,bank_account,paynow,credit_card,password,ip_address,api_key,version
+Healthcare,USER001,[REDACTED],sarah@email.com,8123****,HASH:dde937ba5ec7,HASH:887068a2766d,[REDACTED],XXXX,nan****,XXXX,[REDACTED],nan,[REDACTED],vX.X.X
+Banking,USER002,[REDACTED],john@email.com,9123****,HASH:9b2d5b467878,HASH:9b2d5b467878,[REDACTED],XXXXXXXXX0120,9123****,XXXXXXXXXXXXX1110,[REDACTED],nan,[REDACTED],vX.X.X
+IT,USER003,[REDACTED],kevin@email.com,nan****,HASH:9b2d5b467878,HASH:9b2d5b467878,[REDACTED],XXXX,nan****,XXXX,[REDACTED],192.168.xxx.xxx,[REDACTED],vX.X.X

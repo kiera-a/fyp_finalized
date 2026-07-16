@@ -1,0 +1,4 @@
+name,nric,email,phone,patient_id,medical_record,diagnosis,age,password,occupation,postcode,gender
+Sarah Lim,S1234567A,sarah@email.com,81234567,P10001,MRN001,Diabetes,34,admin123,Nurse,560123,Female
+Michael Tan,T2345678B,michael@email.com,92345678,P10002,MRN002,Hypertension,45,Password123,Teacher,560124,Male
+Rachel Lee,S3456789C,rachel@email.com,93456789,P10003,MRN003,Asthma,28,Welcome123,Designer,560125,Female

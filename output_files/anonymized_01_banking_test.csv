@@ -1,0 +1,4 @@
+name,customer_id,email,phone,bank_account,paynow,credit_card,salary,password
+USER001,HASH:81ddee8a5dc8,john.tan@email.com,9123****,XXXXXXXX9012,9123****,XXXXXXXXXXXX1111,$3k-$3k,[REDACTED]
+USER002,HASH:7b81147a0e6e,jane.lim@email.com,8123****,XXXXXXXX0123,8123****,XXXXXXXXXXXX4444,$3k-$3k,[REDACTED]
+USER003,HASH:56024914dbf4,bob.ng@email.com,9111****,XXXXXXXX1234,9111****,XXXXXXXXX0027,$3k-$3k,[REDACTED]

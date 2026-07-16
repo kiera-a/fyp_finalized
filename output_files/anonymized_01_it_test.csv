@@ -1,0 +1,4 @@
+name,email,username,password,ip_address,api_key,version,department
+USER001,kevin@email.com,admin,[REDACTED],192.168.xxx.xxx,[REDACTED],v2.5.1,Infrastructure
+USER002,amanda@email.com,sysadmin,[REDACTED],10.10.xxx.xxx,[REDACTED],v3.1.0,Security
+USER003,ryan@email.com,support,[REDACTED],172.16.xxx.xxx,[REDACTED],v1.9.2,Operations

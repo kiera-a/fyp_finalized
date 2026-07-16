@@ -1,0 +1,266 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Select Protection</title><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"><style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}:root{--bg:#0a0a0f;--surface:#12121a;--panel:#191622;--border:#1e1e2e;--accent:#7c6af7;--accent2:#e85d8a;--text:#e8e8f0;--muted:#c8c8d6;--success:#4ade80;--mono:'DM Mono',monospace;--sans:'Manrope',sans-serif;}body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;padding:42px 18px}.blob{position:fixed;border-radius:50%;filter:blur(90px);opacity:.12;pointer-events:none;z-index:0}.blob-1{width:520px;height:520px;background:var(--accent);top:-190px;left:-160px}.blob-2{width:420px;height:420px;background:var(--accent2);bottom:-120px;right:-120px}.wrap{position:relative;z-index:1;width:100%;max-width:980px;margin:0 auto}.top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-bottom:26px}.logo{display:flex;align-items:center;gap:10px}.logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center}.logo-text{font-family:var(--sans);font-size:18px;font-weight:700}.logo-sub{font-size:13px;color:#d2d2dd;font-family:var(--sans);}h1{font-family:var(--sans);
+    font-size:40px;
+    font-weight:700;
+    letter-spacing:-0.8px;
+}.subtitle{ color:#d2d2dd; font-family:var(--sans);font-size:15px;line-height:1.6;margin-top:8px}.card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:26px;margin-bottom:18px;box-shadow:0 24px 80px rgba(0,0,0,.45)}.sector-pill{display:inline-flex;gap:8px;align-items:center;background:rgba(124,106,247,.12);border:1px solid rgba(124,106,247,.35);color:var(--accent);border-radius:999px;padding:8px 12px;font-size:12px;font-family:var(--mono);font-weight:700}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}.score{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;padding:14px}.score-title{font-size:12px;color:var(--muted);font-family:var(--mono);text-transform:uppercase}.score-num{font-size:24px;font-weight:800;margin-top:6px}.change-sector{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.radio-card{background:rgba(124,106,247,.06);border:1px solid var(--border);border-radius:12px;padding:10px 13px;cursor:pointer;font-size:13px;font-weight:700}.radio-card input{accent-color:var(--accent);margin-right:7px}.radio-card:has(input:checked){border-color:var(--accent);background:rgba(124,106,247,.15)}.small-btn{padding:10px 14px;background:linear-gradient(135deg,var(--accent),var(--accent2));border:0;border-radius:12px;color:white;font-family:var(--sans);font-weight:700;cursor:pointer}.section-title{font-family:var(--sans); font-size:20px;font-weight:700;text-transform:none;letter-spacing:.3px;margin-bottom:14px}.items{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.item{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;padding:16px;position:relative;transition:border-color .2s,background .2s,opacity .2s}.item.off{opacity:.55}.item:has(input:checked){opacity:1;border-color:rgba(124,106,247,.55);background:linear-gradient(180deg,rgba(124,106,247,.10),rgba(232,93,138,.04))}.item input{position:absolute;top:14px;right:14px;width:17px;height:17px;accent-color:var(--accent)}.item h3{font-size:16px;margin-bottom:8px}.tech{color:var(--success);font-family:var(--mono);font-size:12px;font-weight:700}.risk{font-family:var(--sans); color:#d7d7e5;font-size:14px;margin-top:10px;line-height:1.6}.detected{color:#ff8ab3;font-family:var(--mono);font-size:14px;font-weight:700;margin-top:12px}.sev{display:inline-block;margin-top:10px;font-family:var(--mono);font-size:13px;padding:4px 8px;border-radius:7px;border:1px solid rgba(232,93,138,.35);color:var(--accent2)}select{background:#0f0f16;border:1px solid var(--border);color:var(--text);border-radius:10px;padding:11px;width:100%;font-family:var(--mono);margin-bottom:14px}.consent{display:flex;gap:10px;align-items:flex-start;color:var(--muted);font-size:13px;line-height:1.4;margin:16px 0}.consent input{accent-color:var(--accent);margin-top:2px}.btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:12px;color:white;font-family:var(--sans);font-size:15px;font-weight:800;cursor:pointer}.back{color:var(--muted);font-family:var(--mono);font-size:12px;text-decoration:none}.ocr-box{margin-top:16px;background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.25);border-radius:14px;padding:14px}.ocr-box.error{background:rgba(232,93,138,.08);border-color:rgba(232,93,138,.35)}.ocr-title{font-family:var(--mono);font-size:11px;text-transform:uppercase;color:var(--success);margin-bottom:8px}.ocr-box.error .ocr-title{color:var(--accent2)}.ocr-preview{margin-top:10px;background:#0f0f16;border:1px solid var(--border);border-radius:10px;padding:12px;max-height:160px;overflow:auto;white-space:pre-wrap;font-family:var(--mono);font-size:14px;line-height:1.7;color:var(--muted)}@media(max-width:760px){.items,.grid{grid-template-columns:1fr}.top{display:block}.card{padding:20px}}
+</style></head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+
+<div class="wrap">
+
+    <div class="top">
+
+        <div>
+
+            <div class="logo">
+                <div class="logo-icon">🔒</div>
+
+                <div>
+                    <div class="logo-text">
+                        Secure Data Anonymizer
+                    </div>
+
+                    <div class="logo-sub">
+                        GRC-AWARE FRAMEWORK
+                    </div>
+                </div>
+
+            </div>
+
+            <h1>Review detected risks</h1>
+
+            <p class="subtitle">
+                Auto-detected sector and suggested protection based on GRC rules.
+            </p>
+
+        </div>
+
+        <a href="/reset" class="back">
+            ← Upload another file
+        </a>
+
+    </div>
+
+    <div class="card">
+
+    <span class="sector-pill">
+        Suggested:
+
+        {% for s in suggested_sectors %}
+            {{ sectors[s].label }}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+
+        |
+        Selected:
+
+        {% for s in suggested_sectors %}
+            {{ sectors[s].label }}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+    </span>
+
+    <p class="subtitle">
+
+        All detected sectors will be protected automatically.
+
+        <br><br>
+
+        {% for s in suggested_sectors %}
+
+            <strong>{{ sectors[s].label }}</strong><br>
+
+            {{ sectors[s].description }}<br>
+
+            Reference:
+            {{ sectors[s].regulators }}
+
+            {% if not loop.last %}
+                <br><br>
+            {% endif %}
+
+        {% endfor %}
+
+    </p>
+
+    {% if ocr_message %}
+
+    <div class="ocr-box {% if ocr_message.startswith('[OCR ERROR') or ocr_message.startswith('[OCR WARNING') %}error{% endif %}">
+
+        <div class="ocr-title">
+            OCR Status
+        </div>
+
+        <p class="subtitle">
+            {{ ocr_message }}
+        </p>
+
+        {% if ocr_preview and not ocr_preview.startswith('[OCR') %}
+
+        <div class="ocr-preview">
+            {{ ocr_preview }}
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    {% endif %}
+
+    <div class="grid">
+
+        {% for k,v in sector_scores.items() %}
+
+        <div class="score">
+
+            <div class="score-title">
+                {{ sectors[k].label }}
+            </div>
+
+            <div class="score-num">
+                {{ v }}
+            </div>
+
+            <div class="subtitle">
+                Matches:
+                {{ matched_keywords[k]|join(', ') if matched_keywords[k] else 'None' }}
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<div class="card">
+
+    <h3 class="section-title">
+        Detected Sectors
+    </h3>
+
+    {% for s in suggested_sectors %}
+
+        <div class="sector-pill">
+            ✅ {{ sectors[s].label }}
+        </div>
+
+    {% endfor %}
+
+    <p class="subtitle">
+        All anonymization techniques from every detected sector will be applied automatically.
+    </p>
+
+</div>
+
+<form action="/process" method="POST">
+
+<div class="card">
+
+    <div class="section-title">
+        Protect / Don't Protect
+    </div>
+
+    <div class="items">
+
+    {% for key, item in sector_rules["items"].items() %}
+
+        {% set count = detected.get(key,0) %}
+
+        <label class="item {% if count==0 %}off{% endif %}">
+
+            <input
+                type="checkbox"
+                name="protect"
+                value="{{ key }}"
+                {% if count>0 %}checked{% endif %}
+            >
+
+            <h3>{{ item.label }}</h3>
+
+            <div class="tech">
+                Technique:
+                {{ item.technique }}
+            </div>
+
+            <div class="risk">
+                {{ item.risk }}
+            </div>
+
+            <div class="sev">
+                Severity:
+                {{ item.severity }}
+            </div>
+
+            <div class="detected">
+                Detected:
+                {{ count }}
+            </div>
+
+        </label>
+
+    {% endfor %}
+
+    </div>
+
+</div>
+
+<div class="card">
+
+    <div class="section-title">
+        Output Format
+    </div>
+
+    <select name="output_format">
+
+        {% for ext,label in output_formats.items() %}
+
+        <option
+            value="{{ ext }}"
+            {% if ext==input_ext %}selected{% endif %}
+        >
+            {{ label }}
+        </option>
+
+        {% endfor %}
+
+    </select>
+
+    <label class="consent">
+
+        <input
+            type="checkbox"
+            name="consent"
+            required
+        >
+
+        <span>
+            I confirm that I have permission to process this file and understand that sensitive data will be anonymised temporarily.
+        </span>
+
+    </label>
+
+    <button type="submit" class="btn">
+        Anonymize & Generate Dashboard →
+    </button>
+
+</div>
+
+</form>
+
+</div>
+
+<div id="chatbot"></div>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/chatbot.css') }}">
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
+
+</body>
+</html>

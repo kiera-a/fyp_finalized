@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preview & Risk Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#0a0a0f;
+  --surface:#12121a;
+  --surface2:#181827;
+  --border:#1e1e2e;
+  --accent:#7c6af7;
+  --accent2:#e85d8a;
+  --text:#e8e8f0;
+  --muted:#d0d0dc;
+  --success:#4ade80;
+  --warning:#facc15;
+  --mono:'DM Mono',monospace;
+  --sans:'Manrope',sans-serif;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  min-height:100vh;
+  padding:42px 18px;
+  overflow-x:hidden;
+}
+
+.blob{
+  position:fixed;
+  border-radius:50%;
+  filter:blur(90px);
+  opacity:.12;
+  pointer-events:none;
+  z-index:0;
+}
+
+.blob-1{width:520px;height:520px;background:var(--accent);top:-190px;left:-160px}
+.blob-2{width:420px;height:420px;background:var(--accent2);bottom:-120px;right:-120px}
+
+.wrap{
+  position:relative;
+  z-index:1;
+  width:100%;
+  max-width:1120px;
+  margin:0 auto;
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:20px;
+  margin-bottom:24px;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:16px;
+}
+
+.logo-icon{
+  width:40px;
+  height:40px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+}
+
+.logo-text{font-family:var(--sans);font-size:18px;font-weight:700}
+.logo-sub{font-size:13px;color:#d2d2dd;font-family:var(--sans)}
+
+h1{
+  font-family:var(--sans);
+  font-size:42px;
+  font-weight:700;
+  line-height:1.15;
+  letter-spacing:-0.8px;
+  margin-bottom:12px;
+}
+
+.subtitle{
+  color:#d2d2dd;
+  font-family:var(--sans);
+  font-size:15px;
+  margin-top:8px;
+  line-height:1.6;
+}
+
+.card{
+  background:rgba(18,18,26,.96);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:24px;
+  margin-bottom:18px;
+  box-shadow:0 24px 80px rgba(0,0,0,.45);
+}
+
+.section-title{
+  font-family:var(--sans);
+  font-size:20px;
+  font-weight:700;
+  text-transform:none;
+  letter-spacing:.5px;
+  margin-bottom:14px;
+}
+
+.metrics{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+}
+
+.metric{
+
+  background:#181824;
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:24px;
+  transition:.25s;
+
+}
+
+.metric:hover{
+
+    transform:translateY(-4px);
+
+    border-color:#7c6af7;
+
+    box-shadow:0 20px 40px rgba(124,106,247,.25);
+
+}
+
+.metric .label{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.5px;
+  color:var(--muted);
+  text-transform:uppercase;
+  line-height:1.2;
+  white-space:normal;
+  word-break:break-word;
+}
+
+.metric .value{
+  font-size:24px;
+  font-weight:800;
+  margin-top:8px;
+  line-height:1.3;
+  overflow:visible;
+  white-space:normal;
+}
+
+.kanon-metrics{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  max-width:640px;
+}
+
+.kanon-metrics .metric{
+    min-height:100px;
+    padding:22px;
+}
+
+.kanon-metrics .value{
+  font-size:28px;
+  line-height:1.4;
+  overflow:visible;
+}
+
+.green{color:var(--success)}
+.pink{color:var(--accent2)}
+.yellow{color:var(--warning)}
+
+.table-wrap{
+  width:100%;
+  overflow-x:auto;
+  border-radius:12px;
+  border:1px solid var(--border);
+}
+
+.table{
+  width:100%;
+  min-width:760px;
+  border-collapse:collapse;
+  font-family:var(--mono);
+  font-size:14px;
+}
+
+.table th,.table td{
+  border-bottom:1px solid var(--border);
+  padding:10px;
+  text-align:left;
+  vertical-align:top;
+}
+
+.table tr:last-child td{border-bottom:0}
+
+.table th{
+  color:var(--accent);
+  background:rgba(124,106,247,.08);
+  font-weight:700;
+  text-transform:uppercase;
+  font-size:10px;
+  letter-spacing:.4px;
+}
+
+.preview-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.box{
+  background:#0f0f16;
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px;
+  min-height:260px;
+  max-height:420px;
+  overflow:auto;
+  white-space:pre-wrap;
+  font-family:var(--mono);
+  font-size:14px;
+  line-height:1.7;
+}
+
+.btns{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  display:inline-block;
+  padding:13px 18px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border:none;
+  border-radius:12px;
+  color:white;
+  font-family:var(--sans);
+  font-size:14px;
+  font-weight:800;
+  text-decoration:none;
+}
+
+.btn.secondary{
+  background:rgba(255,255,255,.05);
+  border:1px solid var(--border);
+  color:var(--text);
+}
+
+.pill{
+  display:inline-flex;
+  gap:8px;
+  align-items:center;
+  background:rgba(124,106,247,.12);
+  border:1px solid rgba(124,106,247,.35);
+  color:var(--accent);
+  border-radius:999px;
+  padding:8px 12px;
+  font-size:12px;
+  font-family:var(--mono);
+  font-weight:700;
+  white-space:nowrap;
+}
+
+.list{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.tag{
+  font-family:var(--mono);
+  font-size:13px;
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:6px 10px;
+  color:white;
+  background:rgba(255,255,255,.03);
+}
+
+.summary-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+    margin-top:20px;
+}
+
+.summary-item{
+    background:#181824;
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:20px;
+    text-align:center;
+}
+
+.summary-title{
+    color:#9ca3af;
+    font-size:13px;
+    margin-bottom:8px;
+}
+
+.summary-number{
+    font-size:32px;
+    font-weight:700;
+    color:white;
+}
+
+.summary-number.green{
+    color:#4ade80;
+}
+
+.summary-text{
+    margin-top:25px;
+    line-height:1.8;
+    color:#d1d5db;
+}
+
+footer{
+    margin-top:50px;
+    text-align:center;
+    color:#8b8b9c;
+    font-size:13px;
+    line-height:1.8;
+}
+
+.download-select{
+
+    width:240px;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    background:#181824;
+
+    color:white;
+
+    border:1px solid #333;
+
+    font-size:15px;
+
+    margin-top:10px;
+
+}
+
+@media(max-width:900px){
+  .metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .preview-grid{grid-template-columns:1fr}
+  .top{display:block}
+  .pill{margin-top:14px}
+}
+
+@media(max-width:560px){
+  body{padding:28px 12px}
+  .card{padding:18px}
+  .metrics,.kanon-metrics{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+
+<div class="wrap">
+
+  <div class="top">
+    <div>
+      <div class="logo">
+        <div class="logo-icon">✓</div>
+        <div>
+          <div class="logo-text">Anonymisation Complete</div>
+          <div class="logo-sub">GRC DASHBOARD GENERATED</div>
+        </div>
+      </div>
+
+      <h1>Preview & Risk Report</h1>
+      <p class="subtitle">
+          Detected Sectors:
+          {% for s in suggested_sectors %}
+              <span class="pill">{{ sectors[s].label }}</span>
+          {% endfor %}
+      </p>
+    </div>
+
+    <span class="pill">{{ total_changes }} items changed</span>
+  </div>
+
+  <div class="card">
+    
+    <div class="section-title">📋 Executive Summary</div>
+
+    <div class="summary-grid">
+
+        <div class="summary-item">
+            <div class="summary-title">Overall Risk</div>
+            <div class="summary-number">
+                {{ dashboard.score_before }}
+            </div>
+        </div>
+
+        <div class="summary-item">
+            <div class="summary-title">Residual Risk</div>
+            <div class="summary-number">
+                {{ dashboard.score_after }}
+            </div>
+        </div>
+
+        <div class="summary-item">
+            <div class="summary-title">Risk Reduction</div>
+            <div class="summary-number green">
+                {{ dashboard.reduction }}%
+            </div>
+        </div>
+
+        <div class="summary-item">
+            <div class="summary-title">Compliance</div>
+            <div class="summary-number green">
+                {{ dashboard.compliance_score }}%
+            </div>
+        </div>
+
+    </div>
+
+    <div class="summary-text">
+
+{% if dashboard.reduction >= 80 %}
+
+<p style="color:#4ade80;font-weight:700;">
+✅ Excellent protection achieved.
+</p>
+
+{% elif dashboard.reduction >= 50 %}
+
+<p style="color:#facc15;font-weight:700;">
+⚠ Moderate protection achieved.
+</p>
+
+{% else %}
+
+<p style="color:#ff6b6b;font-weight:700;">
+❌ High residual risk remains.
+</p>
+
+{% endif %}
+
+<p>
+Sensitive information has been successfully anonymised.
+</p>
+
+<p>
+Overall disclosure risk reduced by
+<strong>{{ dashboard.reduction }}%</strong>.
+</p>
+
+<p>
+Compliance regulations applied:
+<strong>{{ sector_rules.regulators }}</strong>
+</p>
+
+</div>
+
+</div>
+    <div class="section-title">Risk Dashboard</div>
+
+    <div class="metrics">
+
+    <div class="metric">
+        <div class="label">Risk Before</div>
+
+        <div class="value {% if dashboard.level_before == 'Low' %}green{% elif dashboard.level_before == 'Medium' %}yellow{% else %}pink{% endif %}">
+            {{ dashboard.level_before }}
+        </div>
+
+        <div style="margin-top:8px;font-size:13px;color:#9ca3af;">
+            Score: {{ dashboard.score_before }}
+        </div>
+    </div>
+
+    <div class="metric">
+        <div class="label">Risk After</div>
+
+        <div class="value {% if dashboard.level_after == 'Low' %}green{% elif dashboard.level_after == 'Medium' %}yellow{% else %}pink{% endif %}">
+            {{ dashboard.level_after }}
+        </div>
+
+        <div style="margin-top:8px;font-size:13px;color:#9ca3af;">
+            Score: {{ dashboard.score_after }}
+        </div>
+    </div>
+
+    <div class="metric">
+        <div class="label">Risk Reduction</div>
+
+        <div class="value green">
+            {{ dashboard.reduction }}%
+        </div>
+    </div>
+
+    <div class="metric">
+        <div class="label">Compliance</div>
+
+        <div class="value green">
+            {{ dashboard.compliance_score }}%
+        </div>
+    </div>
+
+</div>
+
+  <div class="card">
+    <div class="section-title">Compliance Summary</div>
+
+    <div class="table-wrap">
+      <table class="table">
+        <tr>
+          <th>Data Type</th>
+          <th>Severity</th>
+          <th>Technique</th>
+          <th>Before</th>
+          <th>After</th>
+        </tr>
+
+        {% for row in dashboard.rows %}
+        <tr>
+
+            <td>{{ row.label }}</td>
+
+            <td>
+                {% if row.severity == "Critical" %}
+                    <span style="color:#ff4d6d;font-weight:700;">🔴 Critical</span>
+
+                {% elif row.severity == "High" %}
+                    <span style="color:#ff8c42;font-weight:700;">🟠 High</span>
+
+                {% elif row.severity == "Medium" %}
+                    <span style="color:#ffd166;font-weight:700;">🟡 Medium</span>
+
+                {% else %}
+                    <span style="color:#4ade80;font-weight:700;">🟢 Low</span>
+                {% endif %}
+            </td>
+
+            <td>{{ row.technique }}</td>
+            <td>{{ row.before }}</td>
+            <td>{{ row.after }}</td>
+
+        </tr>
+        {% endfor %}
+       
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">k-Anonymity Preview</div>
+
+    {% if kanon and kanon.available %}
+      <p class="subtitle">Quasi-identifiers found: {{ kanon.quasi_identifiers|join(', ') }}</p>
+
+      <div class="metrics kanon-metrics">
+        <div class="metric">
+          <div class="label">Minimum K</div>
+          <div class="value">{{ kanon.k }}</div>
+        </div>
+
+        <div class="metric">
+          <div class="label">Re-identification Risk</div>
+          <div class="value {% if kanon.risk == 'Low' %}green{% elif kanon.risk == 'Medium' %}yellow{% else %}pink{% endif %}">
+            {{ kanon.risk }}
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <p class="subtitle">{{ kanon.message if kanon else 'No table data available for k-anonymity preview.' }}</p>
+    {% endif %}
+  </div>
+
+  <div class="card">
+    <div class="section-title">Protected Data Types</div>
+
+    <div class="list">
+      {% for t in techniques %}
+      <span class="tag">{{ t }}</span>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="preview-grid">
+    <div class="card">
+      <div class="section-title">Original Preview</div>
+      <div class="box">{{ original }}</div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Anonymised Preview</div>
+      <div class="box">{{ anonymized }}</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="btns">
+
+        <a href="/getfile" class="btn">
+            ⬇ Download Anonymised File
+        </a>
+
+        <a href="/reset" class="btn secondary">
+            Upload Another File
+        </a>
+
+    </div>
+</div>
+<footer>
+
+Generated by Secure Data Anonymizer
+
+<br><br>
+
+Republic Polytechnic Final Year Project
+
+<br>
+
+Version 1.0
+
+<br>
+
+{{ sector_rules.regulators }}
+
+</footer>
+<div id="chatbot"></div>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/chatbot.css') }}">
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
+</body>
+</html>

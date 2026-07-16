@@ -1,0 +1,8 @@
+
+
+===== healthcare_test.csv =====
+
+   name       nric             email    phone        patient_id    medical_record  diagnosis   age   password
+USER001 [REDACTED]   sarah@email.com 8123**** HASH:dde937ba5ec7 HASH:887068a2766d [REDACTED] 30-39 [REDACTED]
+USER002 [REDACTED] michael@email.com 9234**** HASH:6ffa2447740d HASH:3b71d04e5815 [REDACTED] 40-49 [REDACTED]
+USER003 [REDACTED]  rachel@email.com 9345**** HASH:2b4ac0cc6cc2 HASH:b41d63f80fd4 [REDACTED] 20-29 [REDACTED]

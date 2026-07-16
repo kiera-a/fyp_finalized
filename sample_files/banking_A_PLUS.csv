@@ -1,0 +1,4 @@
+name,customer_id,email,phone,bank_account,paynow,credit_card,salary,password,occupation,postcode,gender
+John Tan,CUST001,john.tan@email.com,91234567,123456789012,91234567,4111111111111111,3500,admin123,Engineer,560123,Male
+Jane Lim,CUST002,jane.lim@email.com,81234567,234567890123,81234567,5555555555554444,3800,Password123,Analyst,560123,Female
+Bob Ng,CUST003,bob.ng@email.com,91111222,345678901234,91111222,4007000000027,3200,Welcome123,Engineer,560123,Male
