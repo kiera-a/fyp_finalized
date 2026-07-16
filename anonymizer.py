@@ -321,6 +321,8 @@ def anonymize_dataframe(df, selected_items):
         if key in selected_items:
             if key == "name":
                 new = series.astype(str).map(lambda x: _pseudonymize_name(x))
+            elif key == "email":
+                new = series.astype(str).map(mask_email)
             elif key in ["password", "api_key", "diagnosis", "secret", "nric"]:
                 new = pd.Series(["[REDACTED]"] * len(df), index=df.index)
             elif key in ["phone"]:
