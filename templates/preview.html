@@ -531,8 +531,8 @@ Compliance regulations applied:
           <th>Data Type</th>
           <th>Severity</th>
           <th>Technique</th>
-          <th>Before</th>
-          <th>After</th>
+          <th>Detected</th>
+          <th>Protection Strength</th>
         </tr>
 
         {% for row in dashboard.rows %}
@@ -556,8 +556,8 @@ Compliance regulations applied:
             </td>
 
             <td>{{ row.technique }}</td>
-            <td>{{ row.before }}</td>
-            <td>{{ row.after }}</td>
+            <td>{{ row.detected }}</td>
+            <td>{{ row.protection }}% Risk Reduced</td>
 
         </tr>
         {% endfor %}

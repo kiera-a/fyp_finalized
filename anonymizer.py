@@ -413,21 +413,24 @@ def risk_dashboard(before_counts, after_counts, sectors, selected_items=None):
             # technique strength instead of raw pattern count.
             factor = residual_factor.get(technique, 0.25)
             after_score = before_score * factor
-            display_after = raw_after
+            display_after = round(after_score, 1)
         else:
             # If user did not protect it, remaining detected data stays risky.
             after_score = raw_after * weight
-            display_after = raw_after
+            display_after = round(after_score, 1)
 
         score_before += before_score
         score_after += after_score
+
+        factor = residual_factor.get(meta["technique"], 0.25)
+        protection = round((1 - factor) * 100)
 
         rows.append({
             "key": key,
             "label": meta["label"],
             "severity": meta["severity"],
-            "before": before,
-            "after": display_after,
+            "detected": before,
+            "protection": protection,
             "technique": meta["technique"],
             "status": "Protected" if key in selected_items and before > 0 else "Not selected"
         })
