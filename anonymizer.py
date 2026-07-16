@@ -422,6 +422,10 @@ def risk_dashboard(before_counts, after_counts, sectors, selected_items=None):
         score_before += before_score
         score_after += after_score
 
+        if before == 0:
+            continue
+
+
         factor = residual_factor.get(meta["technique"], 0.25)
         protection = round((1 - factor) * 100)
 
