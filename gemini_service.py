@@ -1,6 +1,5 @@
 import os
 from google import genai
-from matplotlib.style import context
 
 SYSTEM_PROMPT = """
 You are PrivacyGuardian AI, the intelligent assistant for the Secure Data Anonymizer system.
